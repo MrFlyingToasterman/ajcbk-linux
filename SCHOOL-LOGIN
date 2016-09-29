@@ -1,0 +1,59 @@
+#!/bin/bash
+
+echo "Was möchten Sie mounten ?
+[1] Verteilung
+[2] Software
+[3] Abgabe"
+
+read mountverzeichnis
+
+case "$mountverzeichnis" in
+	"1")
+	mpo="Verteilung"
+	;;
+
+	"2")
+	mpo="Software"
+	;;
+
+	"3")
+	mpo="Abgabe"
+	;;
+
+	*)
+	echo "Konnte Mountverzeichnis nicht finden! Mounte Verteilung!"
+	;;
+esac
+
+echo "Anonym Anmelden ? [j/N]"
+
+read freeway
+
+if [ "$freeway" = "j" ]
+then
+
+echo "Ethabliere anonymen zugang...";
+echo "Hinweis: Drücken Sie bei der PW Abfrage einfach [ENTER]"
+mount.cifs //fsbkrat11/$mpo /mnt -o user=R323P08;
+echo "done!";
+
+else
+
+echo "Benutzernamen eingeben:";
+read benutzer;
+echo "Ethabliere normalen Zugang...";
+mount.cifs //fsbkrat11/$mpo /mnt -o user=$benutzer;
+fi
+nautilus /mnt
+echo "Nautilus died"
+echo "
+
+ready.
+
+"
+
+read -p "Press any key to umount" -n1 -s
+umount /mnt
+echo "
+
+ready."
